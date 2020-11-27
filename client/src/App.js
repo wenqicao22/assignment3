@@ -38,8 +38,7 @@ export function App() {
     if (!validURL) {
       alert('The system cannot regconize this URL.')
     }else {
-      console.log('URL is', state.url);
-      axios.post('http://localhost:5000/api/shorten', {
+      axios.post('https://assignment3demo.herokuapp.com/api/shorten', {
       url: state.url,
       link: state.link
       })
@@ -47,7 +46,7 @@ export function App() {
         if (!state.link){
           (function setLinkFun ()
           {
-            dispatch({type:'link', value: `http://wenqi/${res.data.hash}`});
+            dispatch({type:'link', value: `https://assignment3demo.herokuapp.com/${res.data.hash}`});
       
           }());
           // setLink();
@@ -55,7 +54,7 @@ export function App() {
           (function setMessageFun() {
             dispatch({type: 'message', value: res.data.message})
           }());
-          console.log(`link is not empty${res.data.message}`);
+          
         }
       })
       .catch(err => console.log(err))
@@ -83,7 +82,7 @@ export function App() {
             <fieldset>
               <input type='text'
                       name='brandedUrl'
-                      placeholder='(Optional) enter your branded URL starts with http://wenqi/<branded name>'
+                      placeholder='(Optional) enter your branded URL starts with https://assignment3demo.herokuapp.com/<branded name>'
                       onChange={(e)=>dispatch({type: 'link', value: e.target.value})}/>
             </fieldset>
             <fieldset>

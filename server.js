@@ -1,23 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// const bodyParser = require('body-parser')
 
-// const URL = require('./models/urls')
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded());
-// app.use(bodyParser.urlencoded());
-// app.use(bodyParser.json());
+
 
 const cors = require('cors')
 
 app.use(cors())
 
-const db = require('./config/keys').mongoURI || 'mongodb://127.0.0.1/shorten_app';
 
-mongoose.connect(db, {
+mongoose.connect(process.env.MONGODB_URI|| 'mongodb://127.0.0.1/shorten_app', {
     useNewUrlParser: true, useUnifiedTopology: true
   })
         .then(() => console.log('mongoDB connected.'))
@@ -52,21 +48,13 @@ app.get('/:hash', async (req,res) => {
    
 } )
 
-// app.post('/:hash/edit', (req, res) => {
-//     const id = req.params.hash;
-//     console.log(id)
-//     URL.findOne({id: id}, (err, doc) => {
-//         if (doc) {
-//             URL.remove({id: id})
-//         }else {
-//             console.log("err: ",err);
-//         }
-//     })
-// })
 
 app.get('/', (req, res) => {
     res.send('hello');
 });
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+}
+app.listen(port, () => console.log(`Server is on port ${port}`));

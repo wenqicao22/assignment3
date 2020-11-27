@@ -28,11 +28,9 @@ router.post('/', (req, res)=> {
         let listAfter = urlAfter.split('/');
         let lengthAfter = listAfter.length;
         let updates = {$set: {id: listAfter[lengthAfter - 1], hash: listAfter[lengthAfter - 1]}};
-        console.log("updates: ", urlAfter)
         //check if the branded already exist
         URL.findOne({id: listAfter[lengthAfter - 1]}, function(err, doc){
             if (doc) {
-                console.log("the branded URL already exist.")
                 res.send({
                     message: 'the branded URL already exist.'
                 })
@@ -72,11 +70,11 @@ router.post('/', (req, res)=> {
             }else {
                 res.send({
                     hash: uid,
-                    message: `Your new URL is http://wenqi/${uid}`,
+                    message: `Your new URL is https://react3demo.herokuapp.com/${uid}`,
                     state: 200,
                     stateText: 'OK'
                 })
-                console.log("update successfully.")
+                
             }
         });
     }

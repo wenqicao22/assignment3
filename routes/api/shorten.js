@@ -21,15 +21,12 @@ router.get('/test', (req,res) => res.json({msg:'API is working.'}));
 router.post('/', (req, res) => {
     
     if (req.body.url) {
-        urlData = req.body.url;
+        urlInfo = req.body.url;
     }
-    console.log('URL is', urlData);
-    URL.findOne({url: urlData}, (err, doc) =>{
+    URL.findOne({url: urlInfo}, (err, doc) =>{
         if (doc) {
-            console.log(`This url has been found in the history record. Enter a new one for shorten or check out http://wenqi/${urlData}/edit for edit/delete`);
-            console.log('Entry found in db.')
             res.send({
-                message: `This url has been found in the history record. Enter a new one for shorten or check out http://wenqi/${urlData}/edit for edit/delete`
+                message: `This url has been found in the history record. Enter a new one for shorten or check out https://react3demo.herokuapp.com/${urlData}/edit for edit/delete`
             })
         }else {
             console.log("line 27: ",req.body.link);
@@ -48,14 +45,14 @@ router.post('/', (req, res) => {
                         console.log("New url.");
                         const webAddress = new URL({
                             id : uniqid(),
-                            url: urlData,
+                            url: urlInfo,
                         })
                         webAddress.save((err) => {
                             if (err) {
                                 return console.error(err);
                             }
                             res.send({
-                                url: urlData,
+                                url: urlInfo,
                                 hash: webAddress.id,
                                 status: 200,
                                 statusText: 'OK'
@@ -73,7 +70,7 @@ router.post('/', (req, res) => {
                         }
                         const brandedAddress = new URL({
                             id : branedPart,
-                            url: urlData,
+                            url: urlInfo,
                         })
                         brandedAddress.save((err) => {
                             if (err) {
@@ -81,7 +78,7 @@ router.post('/', (req, res) => {
                             }
                             
                             res.send({
-                                url: urlData,
+                                url: urlInfo,
                                 hash: branedPart,
                             })
                         })

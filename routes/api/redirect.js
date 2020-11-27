@@ -6,7 +6,6 @@ router.get('/test', (req,res) => res.json({msg:'API is working.'}));
 
 router.get('/', (req,res) => {
     const hash = req.headers.hash;
-    console.log(hash)
 
     URL.findOne({id: hash})
         .then((doc) => {

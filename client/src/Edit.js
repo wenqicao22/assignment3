@@ -8,7 +8,7 @@ export default function Edit(props) {
     const {match: {params}} = props;
 
     const store = {
-        shortUrlBefore: `http://wenqi/${params.hash}`,
+        shortUrlBefore: `https://react3demo.herokuapp.com/${params.hash}`,
         shortUrlAfter: '',
         message:'',
     }
@@ -29,9 +29,7 @@ export default function Edit(props) {
 
 
     const handleEdit = () => {
-        
-        console.log('URL is', state.shortUrlAfter);
-        axios.post(`http://localhost:5000/${params.hash}/edit`, {
+        axios.post(`https://assignment3demo.herokuapp.com/${params.hash}/edit`, {
             shortUrlBefore: state.shortUrlBefore,
             shortUrlAfter: state.shortUrlAfter
         })
@@ -40,12 +38,11 @@ export default function Edit(props) {
             if (!state.shortUrlAfter){
               (function setLinkFun ()
               {
-                dispatch({type:'shortUrlAfter', value: `http://wenqi/${res.data.hash}`});
+                dispatch({type:'shortUrlAfter', value: `https://react3demo.herokuapp.com/${res.data.hash}`});
           
               }());
               
             }else {
-                console.log(state.shortUrlAfter)
                 (function setMessageFun() {
                     dispatch({type: 'message', value: res.data.message})
                   }());
@@ -67,7 +64,7 @@ export default function Edit(props) {
       const handleDelete = (e) => {
         e.preventDefault();
         
-        axios.post(`http://localhost:5000/${params.hash}/delete`, {
+        axios.post(`https://assignment3demo.herokuapp.com/${params.hash}/delete`, {
             shortUrlBefore: state.shortUrlBefore,
             shortUrlAfter: state.shortUrlAfter
         })
@@ -77,7 +74,6 @@ export default function Edit(props) {
 
       const handleChange = (e) => {
         dispatch({type: 'shortUrlAfter', value: e.target.value})
-        console.log(e.target.value)
       }
 
     return(
@@ -92,11 +88,11 @@ export default function Edit(props) {
           <form>
             <fieldset>
               <div>
-                <span>{`Current shorten URL: http://wenqi/${params.hash}`}</span>
+                <span>{`Current shorten URL: https://assignment3demo.herokuapp.com/${params.hash}`}</span>
               </div>
               <input type='text'
                       name='brandedUrl'
-                      placeholder='(Optional) enter your branded URL for edit, starts with http://wenqi/<branded name>'
+                      placeholder='(Optional) enter your branded URL for edit, starts with https://assignment3demo.herokuapp.com/<branded name>'
                       onChange={handleChange}/>
               <input type='button' 
                         value='Edit URL'
