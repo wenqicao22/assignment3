@@ -14,6 +14,9 @@ router.use((req, res, next) => {
 
 router.post('/', (req, res) => {
     if (req.body.shortUrlBefore) {
+        let urlinfo = req.body.shortUrlBefore;
+        let list = urlinfo.split('/');
+        let length = list.length;
         URL.deleteMany({id: list[length - 1]}, function(error) {
             if (error) {
                 console.error(error);
@@ -25,8 +28,15 @@ router.post('/', (req, res) => {
         URL.findOne({id: list[length - 1]}, function(error,doc) {
             if (error) {
                 console.error(error);
-            }else {
+            }
+            if(doc) {
                 console.log(doc)
+            }else{
+                res.send({
+                    message: 'Deleted successfully',
+                    status: 200,
+                    statusText:'OK'
+                })
             }
         });
     }

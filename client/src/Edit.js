@@ -68,6 +68,17 @@ export default function Edit(props) {
             shortUrlBefore: state.shortUrlBefore,
             shortUrlAfter: state.shortUrlAfter
         })
+        .then(res => {
+          if (res.data.message) {
+            (function setAllFun ()
+            {
+              dispatch({type:'shortUrlBefore', value: ''});
+              dispatch({type: 'shortUrlAfter', value: ''});
+              dispatch({type: 'message', value: res.data.message})
+        
+            }());
+          }
+        })
         .catch(err => console.log(err))
         
       }
